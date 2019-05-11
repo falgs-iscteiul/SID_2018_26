@@ -11,6 +11,26 @@
     	<artifactId>mysql-connector-java</artifactId>
     	<version>8.0.15</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
+	<dependency>
+    	<groupId>org.eclipse.paho</groupId>
+    	<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+    	<version>1.2.1</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver -->
+	<dependency>
+    	<groupId>org.mongodb</groupId>
+    	<artifactId>mongodb-driver</artifactId>
+    	<version>3.6.3</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.6.3</version>
+</dependency>
+	
  </dependencies>
 
 </project>
