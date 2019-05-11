@@ -79,13 +79,13 @@ public class InterfaceLogin {
 					JOptionPane.showMessageDialog(frame, "Login admin com sucesso");
 					username.setText(null);
 					passwordField.setText(null);
-				//	InterfaceAdmin.main(null);
+					InterfaceAdmin.main(null);
 				}
 				else if(name.equals("investigador") && pass.equals("investigador")) {
 					JOptionPane.showMessageDialog(frame, "Login investigador com sucesso");
 					username.setText(null);
 					passwordField.setText(null);
-				//	InterfaceInvestigador.main(null);
+					InterfaceInvestigador.main(null);
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "Password ou username inválido ");
