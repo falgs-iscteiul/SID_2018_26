@@ -1,19 +1,39 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import org.bson.Document;
-
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
-public class MongoToSQL {
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
+
+import java.util.Arrays;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.Mongo;
+import com.mongodb.client.MongoCursor;
+import static com.mongodb.client.model.Filters.*;
+import com.mongodb.client.result.DeleteResult;
+import static com.mongodb.client.model.Updates.*;
+import com.mongodb.client.result.UpdateResult;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 	public static String aux(Document d) {
-	   	String ano;
+		String ano;
 		String mes = "00";
 		String dia;
 		String hora;
@@ -24,7 +44,7 @@ public class MongoToSQL {
 		dia = aux[2];
 		hora = aux[3];
 		if(aux[1].equals("Jan")) {
-			 mes = "01";
+			mes = "01";
 		} else if(aux[1].equals("Fev")) {
 			mes = "02";
 		} else if(aux[1].equals("Mar")) {
@@ -52,39 +72,65 @@ public class MongoToSQL {
 		return date;
 	}
 	
-	MongoClient mongoClient1 = new MongoClient("localhost",27017); 
+	
+	public static void main(String[] args) {
+		MongoClient mongoClient1 = new MongoClient("localhost",27017); 
 
-	MongoDatabase database = mongoClient1.getDatabase("sensores");
-	MongoCollection<Document> collectionTemp = database.getCollection("SensorTemperatura");
-	
-	try {
-		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","alexSID","projetoSID");
-	
-	FindIterable<Document> cursorTemp = (FindIterable<Document>) collectionTemp.find();
-	for (Document d : cursorTemp) {
-//		System.out.println(d);
-		String m = d.toJson().replace("{", "").replace("}", "").replace("\"", "");
-//		System.out.println(m);
-		String[] separar = m.split(",");
-		String id_aux = separar[0];
-		String[] separar_id_aux = id_aux.split(":");
-		String id = separar_id_aux[2];
-//		System.out.println(id);
-		String vm_aux = separar[1];
-		String[] separar_vm_aux = vm_aux.split(":");
-		String vm = separar_vm_aux[1];
-//		System.out.println(vm);
-		String dhm = aux(d);
-//		System.out.println(dhm);
-		Statement stmt=con.createStatement();  
-		int rs=stmt.executeUpdate("INSERT INTO medicaotemperatura VALUES(" + "\"" + dhm + "\"" + "," + "\"" + vm + "\"" + "," + "\"" + id + "\"" + ")");
-	}	
+		MongoDatabase database = mongoClient1.getDatabase("sensores");
+		MongoCollection<Document> collectionTemp = database.getCollection("SensorTemperatura");
+		MongoCollection<Document> collectionLumi = database.getCollection("SensorLuminosidade");
 		
-	}catch(Exception e){ 
-		System.out.println(e);
+		try {
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","alexSID","projetoSID");
+			FindIterable<Document> cursorLumi = (FindIterable<Document>) collectionLumi.find();
+		for (Document d : cursorLumi) {
+//			System.out.println(d);
+			String m = d.toJson().replace("{", "").replace("}", "").replace("\"", "");
+			String[] separar = m.split(",");
+			String id_aux = separar[0];
+			String[] separar_id_aux = id_aux.split(":");
+			String id = separar_id_aux[2];
+//			System.out.println(id);
+			String vm_aux = separar[1];
+			String[] separar_vm_aux = vm_aux.split(":");
+			String vm = separar_vm_aux[1];
+//			System.out.println(vm);
+			String dhm = aux(d);
+//			System.out.println(dhm);
+			Statement stmt=con.createStatement();  
+			int rs=stmt.executeUpdate("INSERT INTO medicaoluminosidade VALUES(" + "\"" + dhm + "\"" + "," + "\"" + vm + "\"" + "," + "\"" + id + "\"" + ")");
+			idsLumi.add(id);
+		}
+//		System.out.println(idsLumi.size());
+		
+//		Statement stmt_to_check2 = con.createStatement();
+//		ResultSet check2 = stmt_to_check2.executeQuery("SELECT IdMedicao from medicaoluminosidade");
+//		while(check2.next()) {
+//			String id_check2 = check2.getString("IdMedicao");
+////			System.out.println(id_check2);
+//			for(String s2 : idsLumi) {
+////				System.out.println(s2);
+//				if(s2.equals(id_check2)) {
+//					collectionTemp.deleteOne(eq("_id",id_check2));
+//				}
+//			}
+//		}
+		
+		Statement stmt_to_check2 = con.createStatement();
+		ResultSet check2 = stmt_to_check2.executeQuery("SELECT IdMedicao from medicaoluminosidade");
+		while(check2.next()) {
+			String id_check2 = check2.getString("IdMedicao").replace(" ", "");
+			for(Document ds : cursorLumi) {
+				String ss = ds.getObjectId("_id").toString().replace(" ", ""
+						+ "");
+				System.out.println(ss);
+				System.out.println(id_check2);
+				if(ss.equals(id_check2)) {
+					System.out.println("entrei2");
+					
+					collectionLumi.deleteOne(ds);
+				}
+			}
+		}
 	}
-	
-	
-	mongoClient1.close();
-}
 }
