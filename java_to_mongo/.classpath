@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Downloads/mongodb-driver-core-3.8.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Downloads/bson-3.8.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Downloads/mongodb-driver-sync-3.10.1-javadoc.jar"/>
-	<classpathentry kind="output" path=""/>
-</classpath>
