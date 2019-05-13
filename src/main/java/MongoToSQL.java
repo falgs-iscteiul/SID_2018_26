@@ -13,7 +13,7 @@ import com.mongodb.client.MongoDatabase;
 public class MongoToSQL {
 
 	public static String aux(Document d) {
-		String ano;
+	   	String ano;
 		String mes = "00";
 		String dia;
 		String hora;
@@ -24,7 +24,7 @@ public class MongoToSQL {
 		dia = aux[2];
 		hora = aux[3];
 		if(aux[1].equals("Jan")) {
-			mes = "01";
+			 mes = "01";
 		} else if(aux[1].equals("Fev")) {
 			mes = "02";
 		} else if(aux[1].equals("Mar")) {
