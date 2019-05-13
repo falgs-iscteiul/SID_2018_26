@@ -84,38 +84,20 @@ import java.text.SimpleDateFormat;
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","alexSID","projetoSID");
 			FindIterable<Document> cursorLumi = (FindIterable<Document>) collectionLumi.find();
 		for (Document d : cursorLumi) {
-//			System.out.println(d);
 			String m = d.toJson().replace("{", "").replace("}", "").replace("\"", "");
 			String[] separar = m.split(",");
 			String id_aux = separar[0];
 			String[] separar_id_aux = id_aux.split(":");
 			String id = separar_id_aux[2];
-//			System.out.println(id);
 			String vm_aux = separar[1];
 			String[] separar_vm_aux = vm_aux.split(":");
 			String vm = separar_vm_aux[1];
-//			System.out.println(vm);
 			String dhm = aux(d);
-//			System.out.println(dhm);
 			Statement stmt=con.createStatement();  
 			int rs=stmt.executeUpdate("INSERT INTO medicaoluminosidade VALUES(" + "\"" + dhm + "\"" + "," + "\"" + vm + "\"" + "," + "\"" + id + "\"" + ")");
 			idsLumi.add(id);
 		}
-//		System.out.println(idsLumi.size());
-		
-//		Statement stmt_to_check2 = con.createStatement();
-//		ResultSet check2 = stmt_to_check2.executeQuery("SELECT IdMedicao from medicaoluminosidade");
-//		while(check2.next()) {
-//			String id_check2 = check2.getString("IdMedicao");
-////			System.out.println(id_check2);
-//			for(String s2 : idsLumi) {
-////				System.out.println(s2);
-//				if(s2.equals(id_check2)) {
-//					collectionTemp.deleteOne(eq("_id",id_check2));
-//				}
-//			}
-//		}
-		
+
 		Statement stmt_to_check2 = con.createStatement();
 		ResultSet check2 = stmt_to_check2.executeQuery("SELECT IdMedicao from medicaoluminosidade");
 		while(check2.next()) {
