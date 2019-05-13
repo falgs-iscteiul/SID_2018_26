@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -72,23 +73,20 @@ public class InterfaceLogin {
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String name= username.getText();
-				String pass= passwordField.getText();
-				
-				if(name.equals("admin") && pass.equals("admin")) {
-					JOptionPane.showMessageDialog(frame, "Login admin com sucesso");
-					username.setText(null);
-					passwordField.setText(null);
-					InterfaceAdmin.main(null);
-				}
-				else if(name.equals("investigador") && pass.equals("investigador")) {
-					JOptionPane.showMessageDialog(frame, "Login investigador com sucesso");
-					username.setText(null);
-					passwordField.setText(null);
-					InterfaceInvestigador.main(null);
-				}
-				else {
-					JOptionPane.showMessageDialog(frame, "Password ou username inválido ");
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost::3307/test","root", "");
+					Statement stmt=con.createStatement();
+					String sql="Select * from tbLogin where UserName='"+username.getText()+"' and Password='"+passwordField.getText().toString()+"'";
+					ResultSet rs=stmt.executeQuery(sql);
+					if(rs.next()) {
+						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso...");
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Password ou Username incorreto...");
+					con.close();
+				}catch(Exception e) {
+					System.out.println(e);
 				}
 			}
 		});
