@@ -1,36 +1,52 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.codebin</groupId>
-  <artifactId>SID-ES2-26a</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
- <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.codebin</groupId>
+	<artifactId>SID-ES2-26a</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-	<dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>8.0.15</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3 -->
-	<dependency>
-    	<groupId>org.eclipse.paho</groupId>
-    	<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-    	<version>1.2.1</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver -->
-	<dependency>
-    	<groupId>org.mongodb</groupId>
-    	<artifactId>mongodb-driver</artifactId>
-    	<version>3.6.3</version>
-	</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
-<dependency>
-    <groupId>org.mongodb</groupId>
-    <artifactId>mongo-java-driver</artifactId>
-    <version>3.6.3</version>
-</dependency>
-	
- </dependencies>
+	<repositories>
+		<repository>
+			<id> Eclipse Paho Repo</id>
+			<name>paho</name>
+			<url>https://repo.eclipse.org/content/repositories/paho-snapshots/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver</artifactId>
+			<version>3.6.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.6.3</version>
+		</dependency>
+
+	</dependencies>
 
 </project>
