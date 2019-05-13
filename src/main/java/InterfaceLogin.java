@@ -74,16 +74,25 @@ public class InterfaceLogin {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection con=DriverManager.getConnection("jdbc:mysql://localhost::3307/test","root", "");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
 					Statement stmt=con.createStatement();
 					String sql="Select * from tbLogin where UserName='"+username.getText()+"' and Password='"+passwordField.getText().toString()+"'";
 					ResultSet rs=stmt.executeQuery(sql);
 					if(rs.next()) {
 						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso...");
+						if(username.getText().equalsIgnoreCase("admin")){
+							InterfaceAdmin adm = new InterfaceAdmin();
+							adm.main(null);
+						}
+						else {
+							InterfaceInvestigador inv = new InterfaceInvestigador();
+							inv.main(null);
+						}
 					}
-					else
+					else {
 						JOptionPane.showMessageDialog(null, "Password ou Username incorreto...");
+						
+					}
 					con.close();
 				}catch(Exception e) {
 					System.out.println(e);
