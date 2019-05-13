@@ -66,7 +66,7 @@ public class InterfaceLogin {
 		username.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(375, 194, 230, 27);
+		passwordField.setBounds(375, 194, 230, 27); 
 		frame.getContentPane().add(passwordField);
 		
 		JButton btnLogin = new JButton("Login");
