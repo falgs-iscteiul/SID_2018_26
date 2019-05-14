@@ -3,6 +3,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
 import javax.swing.JButton;
 
 public class InterfaceAdmin {
@@ -24,11 +30,11 @@ public class InterfaceAdmin {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the application.
 	 */
-	public InterfaceAdmin() {
+	public InterfaceAdmin() throws Exception {
 		initialize();
 	}
 
@@ -47,9 +53,15 @@ public class InterfaceAdmin {
 		frame.getContentPane().add(lblAdministratorPanel);
 		
 		JButton btnCriar = new JButton("Criar");
+		btnCriar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				InterfaceCriarAdmin adm1 = new InterfaceCriarAdmin();
+				adm1.main(null);
+			}
+		});
 		btnCriar.setBounds(58, 135, 97, 25);
 		frame.getContentPane().add(btnCriar);
-		
+
 		JButton btnVer = new JButton("Ver");
 		btnVer.setBounds(58, 173, 97, 25);
 		frame.getContentPane().add(btnVer);
