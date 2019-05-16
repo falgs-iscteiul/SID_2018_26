@@ -147,6 +147,12 @@ public class InterfaceAdmin {
 		
 		
 		JButton button_3 = new JButton("Apagar");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				InterfaceApagarVariaveis apagarAd = new InterfaceApagarVariaveis();
+				InterfaceApagarVariaveis.main(null);
+			}
+		});
 		button_3.setBounds(536, 211, 97, 25);
 		frame.getContentPane().add(button_3);
 		

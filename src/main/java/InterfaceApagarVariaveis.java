@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 
-public class InterfaceApagarAdmin extends JFrame {
+public class InterfaceApagarVariaveis extends JFrame {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class InterfaceApagarAdmin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceApagarAdmin frame = new InterfaceApagarAdmin();
+					InterfaceApagarVariaveis frame = new InterfaceApagarVariaveis();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class InterfaceApagarAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaceApagarAdmin() {
+	public InterfaceApagarVariaveis() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 492, 355);
 		contentPane = new JPanel();
@@ -54,14 +54,14 @@ public class InterfaceApagarAdmin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCriarAdministrador = new JLabel("Apagar Investigador");
+		JLabel lblCriarAdministrador = new JLabel("Apagar Variaveis");
 		lblCriarAdministrador.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCriarAdministrador.setBounds(139, 13, 215, 25);
 		contentPane.add(lblCriarAdministrador);
 		
-		JLabel lblUsername = new JLabel("Email");
+		JLabel lblUsername = new JLabel("Nome Variavel");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUsername.setBounds(12, 79, 100, 16);
+		lblUsername.setBounds(12, 79, 190, 16);
 		contentPane.add(lblUsername);
 
 		textField = new JTextField();
@@ -72,10 +72,10 @@ public class InterfaceApagarAdmin extends JFrame {
 		JButton btnApagar = new JButton("Apagar");
 		btnApagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String  email = textField.getText();
+				String  variavel = textField.getText();
 				try {
 					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
-					PreparedStatement deleted = con.prepareStatement("DELETE FROM investigador WHERE Email = '" + email + "';");
+					PreparedStatement deleted = con.prepareStatement("DELETE FROM variavel WHERE NomeVariavel = '" + variavel + "';");
 					deleted.executeUpdate();
 					textField.setText("");
 				} catch (SQLException e1) {
