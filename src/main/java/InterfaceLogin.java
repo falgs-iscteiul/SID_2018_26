@@ -85,7 +85,7 @@ public class InterfaceLogin {
 							adm.main(null);
 						}
 						else {
-							InterfaceInvestigador inv = new InterfaceInvestigador();
+							InterfaceInvestigadors inv = new InterfaceInvestigadors();
 							inv.main(null);
 						}
 					}
