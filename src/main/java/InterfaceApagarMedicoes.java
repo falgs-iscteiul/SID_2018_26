@@ -54,14 +54,14 @@ public class InterfaceApagarMedicoes extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblCriarAdministrador = new JLabel("Apagar Investigador");
+		JLabel lblCriarAdministrador = new JLabel("Apagar Medicoes");
 		lblCriarAdministrador.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCriarAdministrador.setBounds(139, 13, 215, 25);
 		contentPane.add(lblCriarAdministrador);
 		
-		JLabel lblUsername = new JLabel("Email");
+		JLabel lblUsername = new JLabel("Numero Medicao");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUsername.setBounds(12, 79, 100, 16);
+		lblUsername.setBounds(12, 79, 156, 16);
 		contentPane.add(lblUsername);
 
 		textField = new JTextField();
@@ -72,10 +72,10 @@ public class InterfaceApagarMedicoes extends JFrame {
 		JButton btnApagar = new JButton("Apagar");
 		btnApagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String  email = textField.getText();
+				String numeroMedicao = textField.getText();
 				try {
 					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
-					PreparedStatement deleted = con.prepareStatement("DELETE FROM investigador WHERE Email = '" + email + "';");
+					PreparedStatement deleted = con.prepareStatement("DELETE FROM medicoes WHERE NumeroMedicao = '" + numeroMedicao + "';");
 					deleted.executeUpdate();
 					textField.setText("");
 				} catch (SQLException e1) {
