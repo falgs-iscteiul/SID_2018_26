@@ -32,7 +32,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-	public static String aux(Document d) {
+	/*public static String aux(Document d) {
 		String ano;
 		String mes = "00";
 		String dia;
@@ -116,3 +116,4 @@ import java.text.SimpleDateFormat;
 		}
 	}
 }
+*/

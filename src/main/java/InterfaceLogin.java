@@ -17,6 +17,8 @@ public class InterfaceLogin {
 	private JFrame frame;
 	private JTextField username;
 	private JPasswordField passwordField;
+	public String user;
+	public String pass;
 
 	/**
 	 * Launch the application.
@@ -74,19 +76,22 @@ public class InterfaceLogin {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+					user = username.getText();
+					pass = passwordField.getText().toString();
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",user,pass);
 					Statement stmt=con.createStatement();
-					String sql="Select * from tbLogin where UserName='"+username.getText()+"' and Password='"+passwordField.getText().toString()+"'";
+					JOptionPane.showMessageDialog(null, "Login efetuado com sucesso...");
+					String sql="Select current_role";
 					ResultSet rs=stmt.executeQuery(sql);
 					if(rs.next()) {
-						JOptionPane.showMessageDialog(null, "Login efetuado com sucesso...");
-						if(username.getText().equalsIgnoreCase("admin")){
-							InterfaceAdmin adm = new InterfaceAdmin();
-							adm.main(null);
-						}
-						else {
+						String cargo = rs.getString("current_role");
+						if(cargo.equals("Investigador")){
 							InterfaceInvestigador inv = new InterfaceInvestigador();
 							inv.main(null);
+						}
+						else {
+							InterfaceAdmin adm = new InterfaceAdmin();
+							adm.main(null);
 						}
 					}
 					else {
