@@ -24,9 +24,12 @@ import com.mongodb.client.MongoCollection;
 
 public class PahoConnector implements MqttCallback {
 
+	
+	
+	
 	MqttClient client;
 	private final int qos = 0;
-	private String topic = "/sid_lab_2019_2";
+	private String topic = "/sid_lab_2019";    //  /sid_lab_2019, tcp://iot.eclipse.org  //  /sid_lab_2019_2, tcp://broker.mqttdashboard.com
 	private boolean loop = true;
 	String clientID = MqttClient.generateClientId();
 	int i=0;
@@ -40,29 +43,27 @@ public class PahoConnector implements MqttCallback {
 	public void runApp() {
 		  
 		try {
-			System.out.println("entrei conecao");
-			client = new MqttClient("tcp://broker.mqttdashboard.com", clientID, new MemoryPersistence()); 				
+			client = new MqttClient("tcp://iot.eclipse.org", clientID, new MemoryPersistence()); 				
 	    	client.setCallback(this);
 	    	MqttConnectOptions options = new MqttConnectOptions();
 	    	options.setAutomaticReconnect(true);
 	    	options.setCleanSession(true);
 	    	options.setConnectionTimeout(10);
 	    	client.connect(options);
-	    	client.subscribe(topic, qos); 
+	    	client.subscribe(topic, qos);
 	    	
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
 		
+		
 		try {
-			
-			MongoClient mongoClient = new MongoClient( "localhost",27017);
+			MongoClient mongoClient = new MongoClient("localhost",27017);
 //			MongoCredential credential;
 //		    credential = MongoCredential.createCredential("sampleUser", "myDb", "password".toCharArray());
 		 	database = mongoClient.getDB("sensores");
 //		 	database.createCollection("SensorTemperatura", null);
 //		 	database.createCollection("SensorLuminosidade", null);
-		 	System.out.println("entrei mongo");
 
 		} catch(Exception e) {
 			//System.out.println(e);
@@ -71,12 +72,17 @@ public class PahoConnector implements MqttCallback {
 	
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 
+		System.out.println("entrei");
+		
 			String value = new String(message.getPayload());			
-//			System.out.println(value);
-			System.out.println();
+	//		System.out.println(value);
+			System.out.println(i);
+		
 			if (i>0) {
-				System.out.println("entrei00");
+				System.out.println("entrei");
+				System.out.println(value);
 				String clean = value.replace("{", "").replace("}", "").replace("\"", "").replace("sens", "").replace("eth", "");
+				System.out.println(clean);
 				String [] value_aux = clean.split(",");
 				String [] temp_aux = value_aux[0].split(":");
 	//			char[] array = new char [5];
@@ -100,17 +106,17 @@ public class PahoConnector implements MqttCallback {
 	//			System.out.println(humidade);
 				if (filtrarTemperatura(temperatura)==true) {
 					toMongoTem(temperatura,hora_data);
-					System.out.println("entrei0");
 				}
 				if (filtrarHumidade(cell)==true) {
-					System.out.println("entrei1");
 					toMongoHum(cell,hora_data);
 				}
 				
 			}
 			
 			i++;
+			System.out.println(i);
 			try{ Thread.sleep(5000);} catch (InterruptedException e) {Thread.currentThread().interrupt();}
+		
 				
 	}
 
@@ -182,7 +188,6 @@ public class PahoConnector implements MqttCallback {
 //	 	documentHD.put("DataHoraMedicao", data);
 //	 	collectionHum.insert(documentHD);
 //		collectionHum.insert(documentH);
-		System.out.println("Entrieii");
 		Map<String, Object> documentMap = new HashMap<String, Object>();
 		documentMap.put("ValorMedicao", humidade);
 		documentMap.put("DataHoraMedicao", data);
@@ -198,4 +203,3 @@ public class PahoConnector implements MqttCallback {
 		
 	}
 }
-

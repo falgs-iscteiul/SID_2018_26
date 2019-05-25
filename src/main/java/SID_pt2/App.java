@@ -107,28 +107,14 @@ public class App {
 					Statement stmt=con.createStatement();  
 					int rs=stmt.executeUpdate("DELETE FROM migracaoaux");
 					collectionTemp.deleteOne(ds);
-//					File file = new File("C://Users//Alexandre//Desktop//SID//ficheiro" + i + ".txt");
-//					if(file.createNewFile()) {
-//						System.out.println("entrei aqui");
-//						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-//						LocalDateTime now = LocalDateTime.now();
-//						FileWriter writer = new FileWriter(file);
-//						writer.write("N√£o foi enviada uma medi√ß√£o de temperatura para o mysql no instante " + dtf.format(now));
-//						writer.close();
-//						i++;
-//					}
 				} else {
-					
-					
-					
-					
-					File file = new File("C://Utilizadores//filip//Desktop//SID//ficheiroTemp" + i + ".txt");
+					File file = new File("C://Users//filip//Desktop//SID//ficheiroTemp" + i + ".txt");
 					if(file.createNewFile()) {
 						System.out.println("entrei aqui");
 						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 						LocalDateTime now = LocalDateTime.now();
 						FileWriter writer = new FileWriter(file);
-						writer.write("N√£o foi enviada uma medi√ß√£o de temperatura para o mysql no instante " + dtf.format(now));
+						writer.write("N„o foi enviada uma mediÁ„o de temperatura para o mysql no instante " + dtf.format(now));
 						writer.close();
 						
 						i++;
@@ -176,7 +162,7 @@ public class App {
 						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 						LocalDateTime now = LocalDateTime.now();
 						FileWriter writer = new FileWriter(file);
-						writer.write("N√£o foi enviada uma medi√ß√£o de luminosidade para o mysql no instante " + dtf.format(now));
+						writer.write("N„o foi enviada uma mediÁ„o de luminosidade para o mysql no instante " + dtf.format(now));
 						writer.close();
 						i++;
 					}
