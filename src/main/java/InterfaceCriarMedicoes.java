@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 
@@ -61,49 +63,39 @@ public class InterfaceCriarMedicoes extends JFrame {
 		lblCriarAdministrador.setBounds(139, 13, 207, 22);
 		contentPane.add(lblCriarAdministrador);
 		
-		JLabel lblUsername = new JLabel("Email");
+		JLabel lblUsername = new JLabel("Valor");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUsername.setBounds(12, 79, 100, 16);
 		contentPane.add(lblUsername);
-		
-		JLabel lblPassword = new JLabel("Nome");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPassword.setBounds(12, 132, 100, 16);
-		contentPane.add(lblPassword);
-		
-		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCategoria.setBounds(12, 185, 100, 16);
-		contentPane.add(lblCategoria);
 		
 		textField = new JTextField();
 		textField.setBounds(161, 79, 146, 22);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(161, 132, 146, 22);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(161, 185, 146, 22);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
-		
+	
 		JButton btnCriar = new JButton("Criar");
 		btnCriar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String  email = textField.getText();
-				String  nome = textField_1.getText();
-				String  categoria = textField_2.getText();
+				String  valor = textField.getText();
+				int id = 0;
 				try {
 					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mysqlmain?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
-					PreparedStatement inserted = con.prepareStatement("INSERT INTO investigador (Email, NomeInvestigador, CategoriaProfessional) VALUES ('"+email+"','"+nome+"','"+categoria+"')");
+					String query = "SELECT * FROM medicoes";
+				      // create the java statement
+				      Statement st = con.createStatement();
+				      
+				      // execute the query, and get a java resultset
+				      ResultSet rs = st.executeQuery(query);
+				      
+				      // iterate through the java resultset
+				      while (rs.next())
+				      {
+				       id = rs.getInt("NumeroMedicao");
+				      }
+					id++;
+					PreparedStatement inserted = con.prepareStatement("INSERT INTO medicoes (NumeroMedicao, DataHoraMedicao, ValorMedicao, Cultura_VariavelMedida, Variavel_VariavelMedida) VALUES ('"+id+"', '"+System.currentTimeMillis()+"','"+valor+"', '"+1+"', '"+1+"')");
 					inserted.executeUpdate();
 					textField.setText("");
-					textField_1.setText("");
-					textField_2.setText("");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
